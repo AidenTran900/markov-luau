@@ -1,0 +1,5 @@
+--!strict
+return [==[
+<one values="BW" origin="True" in="WB" out="WW"/>
+
+]==]

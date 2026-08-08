@@ -1,0 +1,23 @@
+{
+  "name": "MarkovLuau",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$path": "src/Shared",
+      "MarkovJunior": {
+        "$path": "MarkovLuau/src"
+      },
+      "Packages": {
+        "$path": "Packages"
+      }
+    },
+    "ServerScriptService": {
+      "$path": "src/Server"
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/Client"
+      }
+    }
+  }
+}

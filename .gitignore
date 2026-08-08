@@ -1,0 +1,21 @@
+# Argon
+/sourcemap.json
+
+# Wally
+/Packages
+/ServerPackages
+/DevPackages
+
+MarkovJunior
+MarkovJuniorWeb
+
+# Artifacts
+/*.lock
+/*.rbxl
+/*.rbxlx
+/*.rbxm
+/*.rbxmx
+
+# Misc
+.DS_Store
+__pycache__/
