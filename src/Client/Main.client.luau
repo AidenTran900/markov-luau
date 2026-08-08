@@ -17,6 +17,16 @@ screenGui.ResetOnSpawn = false
 screenGui.IgnoreGuiInset = true
 screenGui.Parent = playerGui
 
+function OnCharacterAdded(char)
+	local HRP = char:WaitForChild("HumanoidRootPart")
+	HRP.Anchored = true
+end
+
+player.CharacterAdded:Connect(OnCharacterAdded)
+if player.Character then
+	OnCharacterAdded(player.Character)
+end
+
 vide.root(function()
 	App().Parent = screenGui
 end)
