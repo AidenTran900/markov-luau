@@ -1,5 +1,5 @@
 [package]
-name = "atran/markovluautest"
+name = "aidentran900/markov-luau-test"
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
