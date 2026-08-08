@@ -1,6 +1,6 @@
 # MarkovLuau
 
-A Luau port of **MarkovJunior** [(read more)](https://github.com/mxgmn/MarkovJunior). It is headless with no Roblox globals (`Random`, `Vector3`, `Instance`, `game`), file reads, or image decoding.
+A Luau port of **MarkovJunior** [(read more)](https://github.com/mxgmn/MarkovJunior). This package is mainly focused towards Roblox development. However, it is headless with no Roblox globals (`Random`, `Vector3`, `Instance`, `game`), file reads, or image decoding.
 
 ### Documentation is provided here: [Docs]().
 
