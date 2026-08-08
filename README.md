@@ -10,8 +10,6 @@ A Luau port of **MarkovJunior** [(read more)](https://github.com/mxgmn/MarkovJun
 
 - **Programmatic DSL**: The `Author` module that allows building models and rule sequences directly in code.
 
-- **Reusable Generation Components**: Shared components that replace duplicated rule chains across models.
-
 - **Time Travel**: A snapshot driven `InterpreterState` that captures grid states during generation for step-by-step playback.
 
 - **Grid Cell Locking**: A `Grid.LockMask` feature that allows predefined layout bounds to be locked, meaning rules can read them but not overwrite.
