@@ -1,4 +1,11 @@
+<p align="center">
+  <img src="static/img/Logo.svg" alt="MarkovLuau" width="800 max-width="100%">
+</p>
+
 # MarkovLuau
+
+![Apartmazements Example](static/img/ApartmazementsThumb.png)
+
 
 A Luau port of **MarkovJunior** [(read more)](https://github.com/mxgmn/MarkovJunior). This package is mainly focused towards Roblox development. However, it is headless with no Roblox globals (`Random`, `Vector3`, `Instance`, `game`), file reads, or image decoding.
 
