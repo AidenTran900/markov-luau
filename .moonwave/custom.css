@@ -13,6 +13,15 @@
     --ifm-background-surface-color: #f7f7f7;
 }
 
+pre code,
+pre.prism-code {
+    background-color: #000000 !important;
+}
+
+pre {
+    background-color: #000000 !important;
+}
+
 html body .footer.footer--dark {
     --ifm-footer-background-color: #1a1a1a;
     --ifm-footer-color: #e0e0e0;

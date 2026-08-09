@@ -14,7 +14,7 @@ export default function Home() {
       <header style={{
         padding: '6rem 0',
         textAlign: 'center',
-        background: 'var(--ifm-color-primary-darker)',
+        background: 'black',
         color: 'white',
       }}>
         <div className="container">
