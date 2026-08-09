@@ -6,6 +6,9 @@ local Node = require(script.Parent.Parent.Node)
 local Helper = require(script.Parent.Parent.Util.Helper)
 local Symmetry = require(script.Parent.Parent.Util.Symmetry)
 
+--[=[
+	@class ConvChain
+]=]
 local ConvChain = {}
 
 export type ConvChainData = {
@@ -32,6 +35,13 @@ export type ConvChainConfig = {
 	On: string,
 }
 
+--[=[
+	Creates a new ConvChain node, synthesizing texture based on an input sample using MCMC.
+	@param config table -- The ConvChain configuration.
+	@param grid table -- The parent grid.
+	@param symmetry table -- Symmetry mask inherited from the parent.
+	@return table -- The constructed ConvChain node.
+]=]
 function ConvChain.New(
 	config: ConvChainConfig,
 	grid: Grid.Grid,

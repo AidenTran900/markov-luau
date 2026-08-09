@@ -6,6 +6,9 @@ local Palette = require(script.Parent.Parent.Symbol.Palette)
 local RegionTable = require(script.Parent.RegionTable)
 local Constants = require(script.Parent.Parent.Util.Constants)
 
+--[=[
+	@class Constraint
+]=]
 local Constraint = {}
 
 export type Ctx = {
@@ -21,6 +24,11 @@ local function inGroup(ctx: Ctx, index: number, group: string): boolean
 	return sym ~= 0 and Palette.InGroup(ctx.Palette, sym, group)
 end
 
+--[=[
+	A structural constraint checking if all members of a group form a single connected component.
+	@param group string -- The symbol group name.
+	@return function -- A constraint checking function.
+]=]
 function Constraint.Connected(group: string): Check
 	return function(ctx: Ctx): (boolean, string?)
 		local field = ctx.Field
@@ -75,6 +83,13 @@ function Constraint.Connected(group: string): Check
 	end
 end
 
+--[=[
+	A structural constraint checking if the total number of cells in a group is within a range.
+	@param group string -- The symbol group name.
+	@param lo number -- Minimum allowed count.
+	@param hi number -- Maximum allowed count.
+	@return function -- A constraint checking function.
+]=]
 function Constraint.VolumeInRange(group: string, lo: number, hi: number): Check
 	return function(ctx: Ctx): (boolean, string?)
 		local field = ctx.Field
@@ -149,6 +164,13 @@ local function bfsReach(ctx: Ctx, fromRegion: number, toRegion: number, group: s
 	return true, path
 end
 
+--[=[
+	A structural constraint checking if one region can reach another by traversing through a specific group.
+	@param fromRegion number -- The starting region ID.
+	@param toRegion number -- The target region ID.
+	@param group string -- The symbol group name serving as the valid path medium.
+	@return function -- A constraint checking function.
+]=]
 function Constraint.Reachable(fromRegion: number, toRegion: number, group: string): Check
 	return function(ctx: Ctx): (boolean, string?)
 		local ok = bfsReach(ctx, fromRegion, toRegion, group)
@@ -159,6 +181,13 @@ function Constraint.Reachable(fromRegion: number, toRegion: number, group: strin
 	end
 end
 
+--[=[
+	A structural constraint checking if a path exists between two regions through a group (alias for Reachable).
+	@param fromRegion number -- The starting region ID.
+	@param toRegion number -- The target region ID.
+	@param group string -- The symbol group name serving as the valid path medium.
+	@return function -- A constraint checking function.
+]=]
 function Constraint.PathExists(fromRegion: number, toRegion: number, group: string): Check
 	return function(ctx: Ctx): (boolean, string?)
 		local ok = bfsReach(ctx, fromRegion, toRegion, group)
@@ -169,6 +198,14 @@ function Constraint.PathExists(fromRegion: number, toRegion: number, group: stri
 	end
 end
 
+--[=[
+	Finds and returns the shortest path (as an array of 1D indices) between two regions through a group.
+	@param ctx table -- The constraint context.
+	@param fromRegion number -- The starting region ID.
+	@param toRegion number -- The target region ID.
+	@param group string -- The symbol group name serving as the valid path medium.
+	@return table? -- An array of 1D voxel indices forming the path, or nil if no path exists.
+]=]
 function Constraint.FindPath(ctx: Ctx, fromRegion: number, toRegion: number, group: string): { number }?
 	local _, path = bfsReach(ctx, fromRegion, toRegion, group)
 	return path

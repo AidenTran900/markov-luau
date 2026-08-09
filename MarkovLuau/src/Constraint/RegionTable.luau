@@ -1,6 +1,9 @@
 --!strict
 --!native
 --!optimize 2
+--[=[
+	@class RegionTable
+]=]
 local RegionTable = {}
 
 export type Bounds = { MinX: number, MinY: number, MinZ: number, MaxX: number, MaxY: number, MaxZ: number }

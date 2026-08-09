@@ -1,6 +1,11 @@
 --!strict
 --!native
 --!optimize 2
+--[=[
+	@class Xml
+	
+	Parses and converts XML MarkovJunior definitions into a standard format.
+]=]
 local Xml = {}
 
 export type XElement = {
@@ -197,6 +202,11 @@ local function readElement(c: Cursor): XElement
 	return { Name = name, Attrs = attrs, Children = children, Line = line }
 end
 
+--[=[
+	Parses a raw XML string into a structured hierarchical element tree.
+	@param source string -- The XML string content.
+	@return table -- The root XElement of the parsed XML.
+]=]
 function Xml.Parse(source: string): XElement
 	local c: Cursor = { S = source, Pos = 1, Line = 1 }
 	skipProlog(c)

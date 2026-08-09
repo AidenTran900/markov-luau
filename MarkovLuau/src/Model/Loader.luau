@@ -28,6 +28,11 @@ local Palette = require(script.Parent.Parent.Symbol.Palette)
 local Contract = require(script.Parent.Contract)
 local MarkerNode = require(script.Parent.Parent.Nodes.Marker)
 
+--[=[
+	@class Loader
+	
+	Loads model specifications and converts them into the engine's internal Node structure.
+]=]
 local Loader = {}
 
 export type ScopeRoleBinding = string | { Group: string } | "Any"
@@ -586,6 +591,13 @@ local function directChildSpecs(
 	return children
 end
 
+--[=[
+	Converts an XML element structure into an abstract DSL Specification.
+	@param xelem table -- The parsed XML element.
+	@param resolver table? -- Optional resolver for loading images/samples/tilesets referenced in the XML.
+	@param folder string? -- The working folder path for resolving external resources.
+	@return table -- The corresponding abstract Spec object.
+]=]
 function Loader.XmlToSpec(
 	xelem: Xml.XElement,
 	resolver: Sample.Resolver?,
@@ -698,6 +710,13 @@ local function applyUnions(
 	end
 end
 
+--[=[
+	Instantiates the executable engine Nodes from an abstract specification.
+	@param spec table -- The DSL specification node.
+	@param grid table -- The 3D grid context to bind the nodes to.
+	@param parentSymmetry table -- The symmetry permutation mask inherited from the parent context.
+	@return table -- The constructed and ready-to-execute Node hierarchy.
+]=]
 function Loader.Build(
 	spec: Spec,
 	grid: Grid.Grid,

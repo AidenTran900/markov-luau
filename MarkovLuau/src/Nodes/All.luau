@@ -6,8 +6,18 @@ local Node = require(script.Parent.Parent.Node)
 local Field = require(script.Parent.Field)
 local RuleNode = require(script.Parent.RuleNode)
 
+--[=[
+	@class All
+]=]
 local All = {}
 
+--[=[
+	Creates a new All node, which applies its rules to all matching non-overlapping locations simultaneously.
+	@param config table -- The rule node configuration.
+	@param grid table -- The parent grid.
+	@param parentSymmetry table -- Symmetry mask inherited from the parent.
+	@return table -- The constructed All node.
+]=]
 function All.New(
 	config: RuleNode.RuleNodeConfig,
 	grid: Grid.Grid,

@@ -3,6 +3,9 @@
 --!optimize 2
 local Node = require(script.Parent.Parent.Node)
 
+--[=[
+	@class BudgetNode
+]=]
 local BudgetNode = {}
 
 export type BudgetData = {
@@ -15,6 +18,14 @@ export type BudgetData = {
 	BodyRunning: boolean,
 }
 
+--[=[
+	Creates a new Budget node, enforcing an execution step or time limit on its body.
+	@param body table -- The child node body to execute.
+	@param steps number? -- Optional maximum number of steps allowed.
+	@param seconds number? -- Optional maximum wall-clock time allowed in seconds.
+	@param name string? -- Optional debug name.
+	@return table -- The constructed Budget node.
+]=]
 function BudgetNode.New(
 	body: Node.Node,
 	steps: number?,

@@ -3,8 +3,16 @@
 --!optimize 2
 local Node = require(script.Parent.Parent.Node)
 
+--[=[
+	@class Marker
+]=]
 local Marker = {}
 
+--[=[
+	Creates a new Marker node, emitting a callback to the interpreter when executed.
+	@param name string -- The string payload passed to the callback.
+	@return table -- The constructed Marker node.
+]=]
 function Marker.New(name: string): Node.Node
 	return { Kind = "Marker", Parent = nil, Data = { Name = name } }
 end

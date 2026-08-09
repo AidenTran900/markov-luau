@@ -1,0 +1,65 @@
+[project]
+name = "MarkovLuau"
+desc = "A Luau port of MarkovJunior"
+
+[docusaurus]
+title = "MarkovLuau"
+tagline = "A Luau port of MarkovJunior"
+url = "https://docs.aidentran.dev"
+baseUrl = "/MarkovLuau/"
+organizationName = "AidenTran900"
+projectName = "markov-luau"
+staticDirectories = ["/home/atran/Documents/Projects/MarkovJuniorLuau/assets"]
+
+[docusaurus.themeConfig]
+colorMode = { defaultMode = "dark", respectPrefersColorScheme = true }
+
+[docusaurus.themeConfig.navbar]
+title = "MarkovLuau"
+
+[[docusaurus.themeConfig.navbar.items]]
+type = "doc"
+docId = "intro"
+position = "left"
+label = "Docs"
+
+[[docusaurus.themeConfig.navbar.items]]
+to = "/api/"
+position = "left"
+label = "API"
+
+[[docusaurus.themeConfig.navbar.items]]
+href = "https://github.com/AidenTran900/markov-luau"
+position = "right"
+label = "GitHub"
+
+[footer]
+style = "dark"
+copyright = "Copyright © 2026 Aiden Tran."
+[[classOrder]]
+section = "Engine Core"
+classes = ["MarkovJunior", "Author", "Interpreter", "Dsl", "Xml"]
+
+[[classOrder]]
+section = "Procedural Nodes"
+classes = ["One", "All", "Parallel", "Path", "Map", "Convolution", "ConvChain"]
+
+[[classOrder]]
+section = "Wave Function Collapse"
+classes = ["Overlap", "TileModel", "WFC"]
+
+[[classOrder]]
+section = "Control & Base Nodes"
+classes = ["ScopeNode", "RetryNode", "BudgetNode", "SeedNode", "Marker", "RuleNode", "Node"]
+
+[[classOrder]]
+section = "Constraints & Output"
+classes = ["Constraint", "RegionTable", "Export", "Neighborhood", "MeshPass"]
+
+[[classOrder]]
+section = "Data Structures"
+classes = ["Grid", "Rule", "Sample", "Pattern", "Component", "Stage", "Loader", "Scope", "Contract", "Field", "VoxelField"]
+
+[[classOrder]]
+section = "Symbol Management"
+classes = ["Alphabet", "Palette", "Legend"]

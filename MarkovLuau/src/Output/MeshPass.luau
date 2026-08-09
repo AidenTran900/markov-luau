@@ -4,6 +4,9 @@
 local Export = require(script.Parent.Export)
 local Palette = require(script.Parent.Parent.Symbol.Palette)
 
+--[=[
+	@class MeshPass
+]=]
 local MeshPass = {}
 
 export type MeshPassFn = (input: Export.MeshInput, dirty: { number }?) -> ...any

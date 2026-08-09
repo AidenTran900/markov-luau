@@ -8,8 +8,18 @@ local Field = require(script.Parent.Field)
 local Observation = require(script.Parent.Parent.Inference.Observation)
 local RuleNode = require(script.Parent.RuleNode)
 
+--[=[
+	@class One
+]=]
 local One = {}
 
+--[=[
+	Creates a new One node, which applies a single random matching rule exactly once per step.
+	@param config table -- The rule node configuration.
+	@param grid table -- The parent grid.
+	@param parentSymmetry table -- Symmetry mask inherited from the parent.
+	@return table -- The constructed One node.
+]=]
 function One.New(
 	config: RuleNode.RuleNodeConfig,
 	grid: Grid.Grid,

@@ -5,6 +5,9 @@ local Node = require(script.Parent.Parent.Node)
 local Interpreter = require(script.Parent.Parent.Interpreter)
 local Contract = require(script.Parent.Parent.Model.Contract)
 
+--[=[
+	@class RetryNode
+]=]
 local RetryNode = {}
 
 export type RetryData = {
@@ -17,6 +20,14 @@ export type RetryData = {
 	AttemptRunning: boolean,
 }
 
+--[=[
+	Creates a new Retry node, retrying its body upon failure to satisfy post-condition contracts.
+	@param body table -- The child node body to execute.
+	@param attempts number -- The maximum number of attempts before throwing an error.
+	@param ensures table? -- The list of contract constraints to check after the body runs.
+	@param name string? -- Optional debug name.
+	@return table -- The constructed Retry node.
+]=]
 function RetryNode.New(
 	body: Node.Node,
 	attempts: number,

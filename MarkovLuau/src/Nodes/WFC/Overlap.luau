@@ -8,6 +8,9 @@ local Helper = require(script.Parent.Parent.Parent.Util.Helper)
 local Symmetry = require(script.Parent.Parent.Parent.Util.Symmetry)
 local WFC = require(script.Parent.WFCNode)
 
+--[=[
+	@class Overlap
+]=]
 local Overlap = {}
 
 export type OverlapRuleSpec = { In: string, Out: string } -- Out: "A|B|C", resolved against newgrid's alphabet
@@ -141,6 +144,15 @@ local function updateState(
 	end
 end
 
+--[=[
+	Creates a new Overlap WFC node, propagating wave states according to local NxN overlap rules based on a sample image.
+	@param config table -- The overlap configuration.
+	@param grid table -- The parent grid.
+	@param newgrid table -- The new child grid where generation happens.
+	@param parentSymmetry table -- Symmetry mask inherited from the parent.
+	@param children table -- The child nodes.
+	@return table -- The constructed Overlap node.
+]=]
 function Overlap.New(
 	config: OverlapConfig,
 	grid: Grid.Grid,

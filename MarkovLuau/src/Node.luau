@@ -7,6 +7,11 @@
 local Grid = require(script.Parent.Grid)
 local Random = require(script.Parent.Util.Random)
 
+--[=[
+	@class Node
+	
+	Defines the fundamental Node structure that makes up a MarkovJunior model execution tree.
+]=]
 local Node = {}
 
 export type Node = {
@@ -63,6 +68,13 @@ local BRANCH_KINDS: { [string]: boolean } = {
 }
 Node.BranchKinds = BRANCH_KINDS
 
+--[=[
+	Advances the execution of a branch node (Sequence or Markov) by invoking its children.
+	@param branch table -- The branch node to execute.
+	@param ip table -- The interpreter state.
+	@param dispatch table -- The table containing implementation routines for each node kind.
+	@return boolean -- True if a child is currently executing, false if the branch is finished.
+]=]
 function Node.BranchGo(branch: Node, ip: InterpreterState, dispatch: Dispatch): boolean
 	local data = branch.Data :: BranchData
 
@@ -90,6 +102,11 @@ function Node.BranchGo(branch: Node, ip: InterpreterState, dispatch: Dispatch): 
 	return false
 end
 
+--[=[
+	Resets the state of a branch node and all of its descendants recursively.
+	@param branch table -- The branch node to reset.
+	@param dispatch table -- The table containing implementation routines for each node kind.
+]=]
 function Node.BranchReset(branch: Node, dispatch: Dispatch)
 	local data = branch.Data :: BranchData
 

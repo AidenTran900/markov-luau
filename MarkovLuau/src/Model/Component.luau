@@ -4,6 +4,11 @@
 local Contract = require(script.Parent.Contract)
 local Loader = require(script.Parent.Loader)
 
+--[=[
+	@class Component
+	
+	Defines reusable model components with encapsulated logic and role requirements.
+]=]
 local Component = {}
 
 export type RoleKind = "Symbol" | "Group" | "Any"
@@ -48,6 +53,12 @@ local function mergeRoles(
 	return merged
 end
 
+--[=[
+	Creates a new parameterized Component that can be instantiated with specific bindings.
+	@param name string -- The name of the component for debugging and logging.
+	@param def table -- The component definition specifying reads, writes, and body generator.
+	@return function -- A constructor function that takes a Bindings table and returns a Node Spec.
+]=]
 function Component.New(
 	name: string,
 	def: ComponentDef

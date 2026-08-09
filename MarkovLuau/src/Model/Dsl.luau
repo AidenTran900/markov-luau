@@ -16,6 +16,11 @@ local ConvChain = require(script.Parent.Parent.Nodes.ConvChain)
 local Overlap = require(script.Parent.Parent.Nodes.WFC.Overlap)
 local TileModel = require(script.Parent.Parent.Nodes.WFC.TileModel)
 
+--[=[
+	@class Dsl
+	
+	Internal definitions and structures for the programmable domain-specific language.
+]=]
 local Dsl = {}
 
 export type Spec = Loader.Spec

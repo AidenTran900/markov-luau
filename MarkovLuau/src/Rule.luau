@@ -9,6 +9,11 @@ local Symmetry = require(script.Parent.Util.Symmetry)
 local Orientation = require(script.Parent.Util.Orientation)
 local Legend = require(script.Parent.Symbol.Legend)
 
+--[=[
+	@class Rule
+	
+	Defines the structure and logic for a single Markov transformation rule.
+]=]
 local Rule = {}
 
 export type Shift = { X: number, Y: number, Z: number }
@@ -46,6 +51,20 @@ local function trailingZeroCount(w: number): number
 	return count
 end
 
+--[=[
+	Constructs a new Rule instance from raw bitmask inputs and byte outputs.
+	@param input table -- The flattened array of input constraint bitmasks.
+	@param imx number -- The input width.
+	@param imy number -- The input height.
+	@param imz number -- The input depth.
+	@param output buffer -- The flattened buffer of output symbols.
+	@param omx number -- The output width.
+	@param omy number -- The output height.
+	@param omz number -- The output depth.
+	@param c number -- The alphabet size / color count.
+	@param p number -- The probability factor of the rule.
+	@return table -- The constructed Rule object.
+]=]
 function Rule.New(
 	input: { number },
 	imx: number,
@@ -128,6 +147,12 @@ function Rule.New(
 	}
 end
 
+--[=[
+	Attaches an orientation buffer to the rule to drive rotational symmetry assignments.
+	@param rule table -- The rule to modify.
+	@param orientation buffer -- The orientation data buffer matching the output dimensions.
+	@return table -- The modified rule instance.
+]=]
 function Rule.WithOrientation(rule: Rule, orientation: buffer): Rule
 	assert(
 		buffer.len(orientation) == rule.OMX * rule.OMY * rule.OMZ,
@@ -137,6 +162,22 @@ function Rule.WithOrientation(rule: Rule, orientation: buffer): Rule
 	return rule
 end
 
+--[=[
+	Builds a rule directly from character strings and legend definitions.
+	@param inChars table -- A list of strings representing the input pattern.
+	@param imx number -- The input width.
+	@param imy number -- The input height.
+	@param imz number -- The input depth.
+	@param outChars table -- A list of strings representing the output pattern.
+	@param omx number -- The output width.
+	@param omy number -- The output height.
+	@param omz number -- The output depth.
+	@param inLegend table -- The compiled legend resolving input characters to wave masks.
+	@param outLegend table -- The compiled legend resolving output characters to specific values.
+	@param c number -- The total color count in the alphabet.
+	@param p number -- The probability factor for the rule.
+	@return table -- The constructed rule.
+]=]
 function Rule.FromChars(
 	inChars: { string },
 	imx: number,
@@ -174,6 +215,14 @@ function Rule.FromChars(
 	return Rule.New(input, imx, imy, imz, output, omx, omy, omz, c, p)
 end
 
+--[=[
+	Parses a rule string representation (like "AAA BBB/CCC DDD") into a flat character list.
+	@param s string -- The rule string to parse.
+	@return table -- The parsed characters.
+	@return number -- The X dimension.
+	@return number -- The Y dimension.
+	@return number -- The Z dimension.
+]=]
 function Rule.Parse(s: string): ({ string }, number, number, number)
 	local lines = Helper.Split(s, " ", "/")
 	local mx = #lines[1][1]
@@ -334,6 +383,13 @@ local function stampOrientations(variants: { Rule }, authored: buffer, d2: boole
 	end
 end
 
+--[=[
+	Generates all active symmetric permutations (rotations and reflections) of a single rule.
+	@param rule table -- The base rule to transform.
+	@param symmetry table -- A boolean array dictating which of the 8 or 48 symmetry permutations are active.
+	@param d2 boolean -- Whether to restrict permutations to 2D transformations.
+	@return table -- A list of unique transformed rules.
+]=]
 function Rule.Symmetries(rule: Rule, symmetry: { boolean }, d2: boolean): { Rule }
 	local elements = if d2
 		then Symmetry.SquareElements(rule, Rule.ZRotated, Rule.Reflected)

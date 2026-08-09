@@ -6,6 +6,9 @@ local Node = require(script.Parent.Parent.Node)
 local Palette = require(script.Parent.Parent.Symbol.Palette)
 local Scope = require(script.Parent.Parent.Model.Scope)
 
+--[=[
+	@class SeedNode
+]=]
 local SeedNode = {}
 
 export type SeedData = {
@@ -14,6 +17,12 @@ export type SeedData = {
 	Done: boolean,
 }
 
+--[=[
+	Creates a new Seed node, injecting external pre-computed voxel data directly into the current state.
+	@param voxelsName string -- The field name containing the pre-computed voxels.
+	@param name string? -- Optional debug name.
+	@return table -- The constructed Seed node.
+]=]
 function SeedNode.New(voxelsName: string, name: string?): Node.Node
 	return {
 		Kind = "Seed",

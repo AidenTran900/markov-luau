@@ -5,6 +5,11 @@ local Grid = require(script.Parent.Parent.Grid)
 local Alphabet = require(script.Parent.Parent.Symbol.Alphabet)
 local Palette = require(script.Parent.Parent.Symbol.Palette)
 
+--[=[
+	@class Contract
+	
+	Provides functionality for checking model grid validity through contract constraints.
+]=]
 local Contract = {}
 
 export type CheckContext = {
@@ -22,6 +27,12 @@ local function requireGrounded(
 	return Alphabet.SymbolAt(alphabet, value)
 end
 
+--[=[
+	A contract constraint that ensures no symbols marked as "private" remain in the final grid.
+	@param ctx table -- The contract check context.
+	@return boolean -- True if the grid is valid.
+	@return string? -- Error details if invalid.
+]=]
 function Contract.NoPrivateSymbols(
 	ctx: CheckContext): (boolean,
 	string?
@@ -48,6 +59,11 @@ function Contract.NoPrivateSymbols(
 	return true
 end
 
+--[=[
+	A contract constraint ensuring all symbols in the grid belong to a specific group.
+	@param group string -- The name of the required group.
+	@return function -- A constraint checking function.
+]=]
 function Contract.OnlySymbols(group: string): Check
 	return function(ctx: CheckContext): (boolean, string?)
 		local grid = ctx.Grid
@@ -74,6 +90,13 @@ function Contract.OnlySymbols(group: string): Check
 	end
 end
 
+--[=[
+	A contract constraint checking that a specific symbol appears a constrained number of times.
+	@param sym number -- The global SymbolId to count.
+	@param lo number -- The minimum required count.
+	@param hi number -- The maximum allowed count.
+	@return function -- A constraint checking function.
+]=]
 function Contract.CountInRange(
 	sym: Palette.SymbolId,
 	lo: number,
@@ -98,6 +121,13 @@ function Contract.CountInRange(
 	end
 end
 
+--[=[
+	A contract constraint ensuring that a specific symbol is not floating above empty space.
+	@param sym number -- The global SymbolId to check.
+	@param emptySym number -- The global SymbolId representing empty space.
+	@param down table? -- The downward directional vector (defaults to {0, -1, 0}).
+	@return function -- A constraint checking function.
+]=]
 function Contract.Supported(
 	sym: Palette.SymbolId,
 	emptySym: Palette.SymbolId,
@@ -133,6 +163,11 @@ function Contract.Supported(
 	end
 end
 
+--[=[
+	A contract constraint ensuring all members of a specific group are orthogonally contiguous/connected.
+	@param group string -- The name of the group.
+	@return function -- A constraint checking function.
+]=]
 function Contract.Connected(group: string): Check
 	return function(ctx: CheckContext): (boolean, string?)
 		local grid = ctx.Grid
@@ -197,6 +232,13 @@ function Contract.Connected(group: string): Check
 	end
 end
 
+--[=[
+	Evaluates a list of contract constraints against a context, returning on the first failure.
+	@param checks table -- The list of constraint functions to execute.
+	@param ctx table -- The context to check against.
+	@return boolean -- True if all checks passed.
+	@return string? -- The error detail from the first failing check, if any.
+]=]
 function Contract.CheckAll(
 	checks: { Check },
 	ctx: CheckContext): (boolean,
@@ -213,6 +255,12 @@ function Contract.CheckAll(
 	return true
 end
 
+--[=[
+	Evaluates a list of contract constraints and throws a hard Lua error if any fail.
+	@param checks table -- The list of constraint functions.
+	@param ctx table -- The context to check against.
+	@param seam string -- A descriptive name for the execution point (for error logging).
+]=]
 function Contract.Assert(
 	checks: { Check },
 	ctx: CheckContext,

@@ -9,6 +9,8 @@
 MarkovJunior
 MarkovJuniorWeb
 
+build
+
 # Artifacts
 /*.lock
 /*.rbxl

@@ -7,6 +7,9 @@ local ScopeMod = require(script.Parent.Parent.Model.Scope)
 local Contract = require(script.Parent.Parent.Model.Contract)
 local Palette = require(script.Parent.Parent.Symbol.Palette)
 
+--[=[
+	@class ScopeNode
+]=]
 local ScopeNode = {}
 
 export type ScopeOptions = {
@@ -25,6 +28,13 @@ export type ScopeData = {
 	Active: ScopeMod.Scope?,
 }
 
+--[=[
+	Creates a new Scope node, grouping nodes under an independent coordinate and symbol scope.
+	@param localGrid table -- The isolated grid instance for this scope.
+	@param children table -- The child nodes executing within this scope.
+	@param options table? -- Optional metadata, including contract assertions and private symbols.
+	@return table -- The constructed Scope node.
+]=]
 function ScopeNode.New(localGrid: Grid.Grid, children: { Node.Node }, options: ScopeOptions?): Node.Node
 	local opts = options or {}
 	return {

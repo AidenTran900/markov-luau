@@ -5,6 +5,10 @@ local Resolver = require(script.Parent.Parent.Resolver)
 local Sample = require(script.Parent.Parent.MarkovJunior.Sample)
 local Author = require(script.Parent.Parent.MarkovJunior.Model.Author)
 
+local SimpleGrowthModel = require(script.Parent.SimpleGrowthModel)
+local PathfindingModel = require(script.Parent.PathfindingModel)
+local BasicWfcModel = require(script.Parent.BasicWfcModel)
+
 export type AuthoredModel = (resolver: Sample.Resolver?) -> {
 	Values: string,
 	Symmetry: string?,
@@ -39,6 +43,30 @@ local Models: { ModelEntry } = {
 		MY = 8,
 		MZ = 8,
 		Steps = nil,
+		Resolver = Resolver.New,
+	},
+	{
+		Name = "SimpleGrowth",
+		Model = SimpleGrowthModel,
+		MX = 20,
+		MY = 20,
+		MZ = 1,
+		Resolver = nil,
+	},
+	{
+		Name = "Pathfinding",
+		Model = PathfindingModel,
+		MX = 20,
+		MY = 20,
+		MZ = 1,
+		Resolver = nil,
+	},
+	{
+		Name = "BasicWfc",
+		Model = BasicWfcModel,
+		MX = 8,
+		MY = 8,
+		MZ = 8,
 		Resolver = Resolver.New,
 	},
 }

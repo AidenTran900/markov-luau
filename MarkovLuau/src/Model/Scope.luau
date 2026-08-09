@@ -6,6 +6,11 @@ local Alphabet = require(script.Parent.Parent.Symbol.Alphabet)
 local Palette = require(script.Parent.Parent.Symbol.Palette)
 local Node = require(script.Parent.Parent.Node)
 
+--[=[
+	@class Scope
+	
+	Defines scopes for resolving and binding symbols to components.
+]=]
 local Scope = {}
 
 export type Scope = {
@@ -40,6 +45,12 @@ local function slotFor(
 	return nil
 end
 
+--[=[
+	Resolves a global Palette SymbolId to a concrete local alphabet slot.
+	@param alphabet table -- The alphabet defining local slots.
+	@param sym number -- The global SymbolId.
+	@return number? -- The 0-based local slot index, or nil if not found.
+]=]
 function Scope.SlotFixedTo(
 	alphabet: Alphabet.Alphabet,
 	sym: Palette.SymbolId
@@ -56,6 +67,12 @@ end
 
 local slotFixedTo = Scope.SlotFixedTo
 
+--[=[
+	Enters a new grid scope, resolving parent symbols into local slots for child node execution.
+	@param ip table -- The interpreter state.
+	@param local_ table -- The child grid to activate.
+	@return table -- The constructed Scope object containing the parent/local grid context.
+]=]
 function Scope.Enter(
 	ip: Node.InterpreterState,
 	local_: Grid.Grid
@@ -87,6 +104,11 @@ function Scope.Enter(
 	return { Parent = parent, Local = local_, Mark = mark }
 end
 
+--[=[
+	Exits a grid scope, copying any modifications made in the local grid back to the parent grid.
+	@param ip table -- The interpreter state.
+	@param scope table -- The Scope object to exit from.
+]=]
 function Scope.Exit(
 	ip: Node.InterpreterState,
 	scope: Scope

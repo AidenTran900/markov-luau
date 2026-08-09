@@ -1,0 +1,44 @@
+
+> docs@0.0.0 swizzle
+> docusaurus swizzle docusaurus-lunr-search SearchBar --eject --danger
+
+
+  ------------------------------------------------------------------------------------------ 
+                                                                                             
+                               Update available 3.10.1 → 3.10.2                              
+                                                                                             
+       To upgrade Docusaurus packages with the latest version, run the following command:    
+               `npm i @docusaurus/core@latest @docusaurus/preset-classic@latest`             
+                                                                                             
+  ------------------------------------------------------------------------------------------ 
+
+[SUCCESS] 
+Ejected SearchBar from docusaurus-lunr-search to 
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/DocSearch.js"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/HighlightSearchResults.jsx"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/algolia.css"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/index.jsx"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/lunar-search.js"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/styles.css"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/templates.js"
+- "/home/atran/.cache/moonwave/MarkovJuniorLuau/src/theme/SearchBar/utils.js"
+
+
+> docs@0.0.0 build
+> docusaurus build --out-dir /home/atran/Documents/Projects/MarkovJuniorLuau/build
+
+
+  ------------------------------------------------------------------------------------------ 
+                                                                                             
+                               Update available 3.10.1 → 3.10.2                              
+                                                                                             
+       To upgrade Docusaurus packages with the latest version, run the following command:    
+               `npm i @docusaurus/core@latest @docusaurus/preset-classic@latest`             
+                                                                                             
+  ------------------------------------------------------------------------------------------ 
+
+[INFO] [en] Creating an optimized production build...
+[webpackbar] ℹ Compiling Client
+[webpackbar] ℹ Compiling Server
+[webpackbar] ✔ Server: Compiled with some errors in 2.18s
+[webpackbar] ✔ Client: Compiled with some errors in 10.23s

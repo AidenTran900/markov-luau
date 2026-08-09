@@ -19,6 +19,11 @@ local ConvChain = require(script.Parent.Parent.Nodes.ConvChain)
 local Overlap = require(script.Parent.Parent.Nodes.WFC.Overlap)
 local TileModel = require(script.Parent.Parent.Nodes.WFC.TileModel)
 
+--[=[
+	@class Author
+	
+	Programmatic DSL for authoring MarkovJunior models entirely in code.
+]=]
 local Author = {}
 
 export type Spec = Loader.Spec
@@ -29,6 +34,12 @@ local function origin(): string
 	return `{source}:{line}`
 end
 
+--[=[
+	Creates a Sequence node that executes its children in linear order.
+	@param children table -- A list of specification child nodes to run.
+	@param symmetry string? -- An optional symmetry transformation modifier.
+	@return table -- A Sequence node specification.
+]=]
 function Author.Sequence(
 	children: { Spec },
 	symmetry: string?
@@ -37,6 +48,12 @@ function Author.Sequence(
 	return { Kind = "Sequence", Symmetry = symmetry, Children = children, Origin = origin() }
 end
 
+--[=[
+	Creates a Markov node that applies its child nodes until no matches are found.
+	@param children table -- A list of specification child nodes to loop through.
+	@param symmetry string? -- An optional symmetry transformation modifier.
+	@return table -- A Markov node specification.
+]=]
 function Author.Markov(
 	children: { Spec },
 	symmetry: string?
@@ -45,14 +62,29 @@ function Author.Markov(
 	return { Kind = "Markov", Symmetry = symmetry, Children = children, Origin = origin() }
 end
 
+--[=[
+	Creates a One node that applies a rule once and terminates.
+	@param config table -- The configuration containing rule parameters.
+	@return table -- A One node specification.
+]=]
 function Author.One(config: RuleNode.RuleNodeConfig): Spec
 	return { Kind = "One", Config = config, Origin = origin() }
 end
 
+--[=[
+	Creates an All node that applies a rule to all possible non-overlapping matches simultaneously.
+	@param config table -- The configuration containing rule parameters.
+	@return table -- An All node specification.
+]=]
 function Author.All(config: RuleNode.RuleNodeConfig): Spec
 	return { Kind = "All", Config = config, Origin = origin() }
 end
 
+--[=[
+	Creates a Parallel node that applies rules continuously in parallel.
+	@param config table -- The configuration containing rule parameters.
+	@return table -- A Parallel node specification.
+]=]
 function Author.Parallel(config: RuleNode.RuleNodeConfig): Spec
 	return { Kind = "Parallel", Config = config, Origin = origin() }
 end
@@ -235,6 +267,11 @@ export type RetryConfig = {
 	Name: string?,
 }
 
+--[=[
+	Creates a Retry node that attempts its body up to a specified number of times if it fails contracts.
+	@param config table -- The retry node configuration and constraint assertions.
+	@return table -- A Retry node specification.
+]=]
 function Author.Retry(config: RetryConfig): Spec
 
 	return {
@@ -266,6 +303,12 @@ function Author.Budget(config: BudgetConfig): Spec
 	}
 end
 
+--[=[
+	Creates a Seed node that initializes the grid from external voxel data.
+	@param voxelsName string -- The name of the voxel file to load.
+	@param name string? -- An optional internal name for the node.
+	@return table -- A Seed node specification.
+]=]
 function Author.Seed(
 	voxelsName: string,
 	name: string?

@@ -11,6 +11,9 @@ local DY = Constants.WFC_DY
 local DZ = Constants.WFC_DZ
 local OPPOSITE = Constants.WFC_OPPOSITE
 
+--[=[
+	@class WFC
+]=]
 local WFC = {}
 
 export type Wave = {
@@ -186,6 +189,20 @@ end
 
 WFC.DX, WFC.DY, WFC.DZ, WFC.Opposite = Constants.WFC_DX, Constants.WFC_DY, Constants.WFC_DZ, Constants.WFC_OPPOSITE
 
+--[=[
+	Initializes the state structure for a Wave Function Collapse node (Overlap or TileModel).
+	@param config table -- The shared WFC configuration.
+	@param p number -- The number of patterns/tiles.
+	@param propagator table -- The compatibility matrix.
+	@param weights table -- Pattern/tile probability weights.
+	@param newgrid table -- The output grid.
+	@param map table -- Initial condition mapping from the input grid.
+	@param dimN number -- Dimensions of the patterns.
+	@param grid table -- The parent grid.
+	@param updateState function -- The injected state update function.
+	@param children table -- The child nodes.
+	@return table -- The constructed WFC state data.
+]=]
 function WFC.NewData(
 	config: WFCSharedConfig,
 	p: number,

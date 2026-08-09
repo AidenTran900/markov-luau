@@ -1,6 +1,11 @@
 --!strict
 --!native
 --!optimize 2
+--[=[
+	@class Stage
+	
+	Manages generation pipeline stages and verifies stage dependencies.
+]=]
 local Stage = {}
 
 export type StageList = { string }
@@ -11,10 +16,21 @@ export type Step = {
 	Produces: string?,
 }
 
+--[=[
+	Creates a new ordered list of pipeline stage names.
+	@param names table -- An array of stage names in sequential order.
+	@return table -- The StageList.
+]=]
 function Stage.New(names: { string }): StageList
 	return names
 end
 
+--[=[
+	Finds the numerical index of a stage by name.
+	@param stages table -- The StageList to search.
+	@param name string -- The name of the stage.
+	@return number? -- The 1-based index, or nil if not found.
+]=]
 function Stage.IndexOf(
 	stages: StageList,
 	name: string
@@ -28,6 +44,13 @@ function Stage.IndexOf(
 	return nil
 end
 
+--[=[
+	Verifies that a series of steps conforms to the defined stage pipeline order.
+	@param stages table -- The canonical StageList definition.
+	@param steps table -- An array of Step objects representing the actual execution pipeline.
+	@return boolean -- True if the pipeline is valid.
+	@return string? -- Error details if invalid.
+]=]
 function Stage.CheckPipeline(
 	stages: StageList,
 	steps: { Step }): (boolean,
@@ -59,6 +82,11 @@ function Stage.CheckPipeline(
 	return true
 end
 
+--[=[
+	Asserts that a pipeline configuration is valid, throwing a Lua error if it isn't.
+	@param stages table -- The canonical StageList definition.
+	@param steps table -- An array of Step objects representing the actual execution pipeline.
+]=]
 function Stage.AssertPipeline(
 	stages: StageList,
 	steps: { Step }

@@ -1,6 +1,11 @@
 --!strict
 --!native
 --!optimize 2
+--[=[
+	@class Pattern
+	
+	Parses multi-line string pattern literals into tokens for rewrite rules.
+]=]
 local Pattern = {}
 
 export type Grid3D = { string } -- 1-indexed, x fastest then y then z (Rule.Parse's own shape)
@@ -60,6 +65,11 @@ end
 
 type LayerLine = { LineNum: number, Text: string }
 
+--[=[
+	Parses a literal multiline string into a structural rule pattern.
+	@param raw string -- The raw string literal containing the pattern definition.
+	@return table -- A structured ParseResult containing 3D grid token arrays.
+]=]
 function Pattern.Parse(raw: string): ParseResult
 	local rawLines: { string } = {}
 

@@ -1,6 +1,11 @@
 --!strict
 --!native
 --!optimize 2
+--[=[
+	@class VoxelField
+	
+	Data structure representing multi-channel voxel arrays for generation output.
+]=]
 local VoxelField = {}
 
 export type ChannelType = "u8" | "u16"
@@ -20,6 +25,14 @@ export type VoxelField = {
 	ChannelTypes: { [string]: ChannelType },
 }
 
+--[=[
+	Creates a new multi-channel VoxelField instance.
+	@param mx number -- The X dimension.
+	@param my number -- The Y dimension.
+	@param mz number -- The Z dimension.
+	@param extraChannels table? -- Optional array of ChannelSpecs to allocate custom data channels.
+	@return table -- The constructed VoxelField.
+]=]
 function VoxelField.New(
 	mx: number,
 	my: number,
@@ -53,6 +66,14 @@ function VoxelField.New(
 	return field
 end
 
+--[=[
+	Calculates the 1D buffer index for a given 3D coordinate.
+	@param field table -- The VoxelField context.
+	@param x number -- The X coordinate.
+	@param y number -- The Y coordinate.
+	@param z number -- The Z coordinate.
+	@return number -- The 0-based 1D index.
+]=]
 function VoxelField.Index(
 	field: VoxelField,
 	x: number,
@@ -62,6 +83,12 @@ function VoxelField.Index(
 	return x + y * field.MX + z * field.MX * field.MY
 end
 
+--[=[
+	Gets the global material SymbolId at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param index number -- The 0-based 1D index.
+	@return number -- The u16 SymbolId.
+]=]
 function VoxelField.GetMaterial(
 	field: VoxelField,
 	index: number
@@ -69,6 +96,12 @@ function VoxelField.GetMaterial(
 	return buffer.readu16(field.Material, index * 2)
 end
 
+--[=[
+	Sets the global material SymbolId at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param index number -- The 0-based 1D index.
+	@param value number -- The u16 SymbolId to assign.
+]=]
 function VoxelField.SetMaterial(
 	field: VoxelField,
 	index: number,
@@ -77,6 +110,12 @@ function VoxelField.SetMaterial(
 	buffer.writeu16(field.Material, index * 2, value)
 end
 
+--[=[
+	Gets the orientation element index at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param index number -- The 0-based 1D index.
+	@return number -- The u8 orientation index, or 0xff if unoriented.
+]=]
 function VoxelField.GetOrientation(
 	field: VoxelField,
 	index: number
@@ -84,6 +123,12 @@ function VoxelField.GetOrientation(
 	return buffer.readu8(field.Orientation, index)
 end
 
+--[=[
+	Sets the orientation element index at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param index number -- The 0-based 1D index.
+	@param value number -- The u8 orientation index to assign.
+]=]
 function VoxelField.SetOrientation(
 	field: VoxelField,
 	index: number,
@@ -92,6 +137,12 @@ function VoxelField.SetOrientation(
 	buffer.writeu8(field.Orientation, index, value)
 end
 
+--[=[
+	Gets the assigned region ID at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param index number -- The 0-based 1D index.
+	@return number -- The u16 region ID.
+]=]
 function VoxelField.GetRegion(
 	field: VoxelField,
 	index: number
@@ -100,6 +151,12 @@ function VoxelField.GetRegion(
 	return buffer.readu16(field.Region, index * 2)
 end
 
+--[=[
+	Sets the assigned region ID at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param index number -- The 0-based 1D index.
+	@param value number -- The u16 region ID to assign.
+]=]
 function VoxelField.SetRegion(
 	field: VoxelField,
 	index: number,
@@ -108,6 +165,13 @@ function VoxelField.SetRegion(
 	buffer.writeu16(field.Region, index * 2, value)
 end
 
+--[=[
+	Reads a value from a custom named channel at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param name string -- The name of the custom channel.
+	@param index number -- The 0-based 1D index.
+	@return number -- The u8 or u16 value stored in the channel.
+]=]
 function VoxelField.GetChannel(
 	field: VoxelField,
 	name: string,
@@ -123,6 +187,13 @@ function VoxelField.GetChannel(
 	return buffer.readu8(buf, index)
 end
 
+--[=[
+	Writes a value to a custom named channel at a specific cell index.
+	@param field table -- The VoxelField context.
+	@param name string -- The name of the custom channel.
+	@param index number -- The 0-based 1D index.
+	@param value number -- The value to assign.
+]=]
 function VoxelField.SetChannel(
 	field: VoxelField,
 	name: string,

@@ -10,6 +10,11 @@
 local Alphabet = require(script.Parent.Alphabet)
 local Palette = require(script.Parent.Palette)
 
+--[=[
+	@class Legend
+	
+	Compiles pattern characters into wave bitmasks for the constraint solver.
+]=]
 local Legend = {}
 
 export type GroupBinding = { Group: string }
@@ -36,7 +41,12 @@ local function groupWave(alphabet: Alphabet.Alphabet, group: string): number
 	return sum
 end
 
--- Adds/overwrites one pattern characters binding
+--[=[
+	Binds a pattern character to an extra logical binding (like a Group, Not expression, or "Any").
+	@param legend table -- The legend to update.
+	@param char string -- The pattern character.
+	@param bind any -- The extra binding definition.
+]=]
 function Legend.Bind(legend: Legend, char: string, bind: ExtraBinding)
 	local alphabet = legend.Alphabet
 
@@ -92,6 +102,12 @@ function Legend.Bind(legend: Legend, char: string, bind: ExtraBinding)
 	end
 end
 
+--[=[
+	Creates a new Legend for a specific Alphabet, optionally evaluating extra bindings.
+	@param alphabet table -- The base alphabet.
+	@param extra table? -- Optional extra bindings.
+	@return table -- The constructed Legend.
+]=]
 function Legend.New(alphabet: Alphabet.Alphabet, extra: { [string]: ExtraBinding }?): Legend
 	local waves: { [string]: number } = {}
 	local values: { [string]: number } = {}
@@ -119,6 +135,12 @@ function Legend.New(alphabet: Alphabet.Alphabet, extra: { [string]: ExtraBinding
 	return legend
 end
 
+--[=[
+	Adds a new pattern symbol that represents the logical OR (union) of a string of other pattern symbols.
+	@param legend table -- The legend to update.
+	@param symbol string -- The new union pattern character.
+	@param values string -- The characters to combine into the union.
+]=]
 function Legend.AddUnion(legend: Legend, symbol: string, values: string)
 	assert(legend.Waves[symbol] == nil, `Legend.AddUnion: repeating union type "{symbol}"`)
 

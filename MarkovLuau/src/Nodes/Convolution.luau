@@ -4,6 +4,9 @@
 local Grid = require(script.Parent.Parent.Grid)
 local Node = require(script.Parent.Parent.Node)
 
+--[=[
+	@class Convolution
+]=]
 local Convolution = {}
 
 local KERNELS_2D: { [string]: { number } } = {
@@ -100,6 +103,12 @@ local function buildConvRule(
 	return { Input = input, Output = output, Values = values, Sums = sums, P = spec.P or 1.0 }
 end
 
+--[=[
+	Creates a new Convolution node, applying cellular automaton neighbor-sum rules.
+	@param config table -- The convolution configuration.
+	@param grid table -- The parent grid.
+	@return table -- The constructed Convolution node.
+]=]
 function Convolution.New(
 	config: ConvolutionConfig,
 	grid: Grid.Grid

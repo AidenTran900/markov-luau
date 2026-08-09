@@ -7,6 +7,9 @@ local Queue = require(script.Parent.Parent.Util.Queue)
 local Node = require(script.Parent.Parent.Node)
 local Constants = require(script.Parent.Parent.Util.Constants)
 
+--[=[
+	@class Field
+]=]
 local Field = {}
 
 export type FieldSpec = {
@@ -29,6 +32,12 @@ export type Field = {
 	Name: string?,
 }
 
+--[=[
+	Creates a new Field instance representing a scalar potential field used for heuristic search.
+	@param spec table -- The field configuration specification.
+	@param grid table -- The parent grid.
+	@return table -- The constructed Field data structure.
+]=]
 function Field.New(spec: FieldSpec, grid: Grid.Grid): Field
 	if spec.Source == "External" then
 		assert(spec.Name, `Field.New: Source="External" needs a Name naming the ip.Fields key`)
@@ -84,6 +93,14 @@ local function computeExternal(
 	return any
 end
 
+--[=[
+	Computes the potential field by calculating distances from the zero-set, propagating through the substrate.
+	@param field table -- The field configuration.
+	@param potential table -- The output array where distance values will be written.
+	@param grid table -- The parent grid.
+	@param ip table -- The interpreter state.
+	@return boolean -- True if the field was successfully computed and has valid potentials.
+]=]
 function Field.Compute(
 	field: Field,
 	potential: { [number]: number },
@@ -148,6 +165,20 @@ function Field.Compute(
 	return true
 end
 
+--[=[
+	Calculates the net change in potential if a specific rule were applied at the given coordinates.
+	Used by Markov search algorithms to evaluate rule candidates.
+	@param state buffer -- The grid's voxel state buffer.
+	@param rule table -- The rule being evaluated.
+	@param x number -- X coordinate of the match.
+	@param y number -- Y coordinate of the match.
+	@param z number -- Z coordinate of the match.
+	@param fields table? -- The array of active fields mapping to symbols.
+	@param potentials table -- The array of computed potential values.
+	@param mx number -- Grid X dimension.
+	@param my number -- Grid Y dimension.
+	@return number? -- The numeric potential delta, or nil if a required potential is missing/invalid.
+]=]
 function Field.DeltaPointwise(
 	state: buffer,
 	rule: Rule.Rule,

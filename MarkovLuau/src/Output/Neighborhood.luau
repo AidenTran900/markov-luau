@@ -5,6 +5,11 @@ local VoxelField = require(script.Parent.Parent.Field.VoxelField)
 local Export = require(script.Parent.Export)
 local Constants = require(script.Parent.Parent.Util.Constants)
 
+--[=[
+	@class Neighborhood
+	
+	Calculates voxel neighborhood adjacency masks for procedural meshing.
+]=]
 local Neighborhood = {}
 
 

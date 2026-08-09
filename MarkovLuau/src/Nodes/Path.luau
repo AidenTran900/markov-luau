@@ -8,6 +8,9 @@ local Queue = require(script.Parent.Parent.Util.Queue)
 local Random = require(script.Parent.Parent.Util.Random)
 local Constants = require(script.Parent.Parent.Util.Constants)
 
+--[=[
+	@class Path
+]=]
 local Path = {}
 
 export type PathData = {
@@ -32,6 +35,12 @@ export type PathSpec = {
 	Vertices: boolean?,
 }
 
+--[=[
+	Creates a new Path node.
+	@param spec table -- The path generation spec.
+	@param grid table -- The grid this path node is bound to.
+	@return table -- The constructed Path node.
+]=]
 function Path.New(
 	spec: PathSpec,
 	grid: Grid.Grid

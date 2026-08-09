@@ -6,6 +6,9 @@ local Rule = require(script.Parent.Parent.Rule)
 local Node = require(script.Parent.Parent.Node)
 local Symmetry = require(script.Parent.Parent.Util.Symmetry)
 
+--[=[
+	@class Map
+]=]
 local Map = {}
 
 export type MapData = {
@@ -44,6 +47,15 @@ export type MapConfig = {
 	ScaleDZ: number,
 }
 
+--[=[
+	Creates a new Map node.
+	@param config table -- The map scaling and rule configuration.
+	@param grid table -- The parent grid.
+	@param newgrid table -- The new rescaled child grid.
+	@param parentSymmetry table -- Symmetry mask inherited from the parent.
+	@param children table -- The child nodes to run in the mapped grid.
+	@return table -- The constructed Map node.
+]=]
 function Map.New(
 	config: MapConfig,
 	grid: Grid.Grid,

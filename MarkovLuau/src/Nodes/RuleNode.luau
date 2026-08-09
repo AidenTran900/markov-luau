@@ -10,6 +10,9 @@ local Field = require(script.Parent.Field)
 local Observation = require(script.Parent.Parent.Inference.Observation)
 local Search = require(script.Parent.Parent.Inference.Search)
 
+--[=[
+	@class RuleNode
+]=]
 local RuleNode = {}
 
 export type Match = { R: number, X: number, Y: number, Z: number }
@@ -77,6 +80,14 @@ export type AddFn = (
 	maskr: buffer?
 ) -> ()
 
+--[=[
+	Creates a new RuleNode state structure, evaluating symmetry and initializing masks and fields.
+	@param config table -- The rule node configuration.
+	@param grid table -- The parent grid.
+	@param parentSymmetry table -- Symmetry mask inherited from the parent.
+	@param needsMatchMask boolean? -- Whether this node requires dedicated match mask buffers.
+	@return table -- The constructed RuleNode state data.
+]=]
 function RuleNode.New(
 	config: RuleNodeConfig, 
 	grid: Grid.Grid, 

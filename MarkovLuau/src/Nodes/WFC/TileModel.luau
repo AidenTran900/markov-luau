@@ -8,6 +8,9 @@ local Helper = require(script.Parent.Parent.Parent.Util.Helper)
 local Symmetry = require(script.Parent.Parent.Parent.Util.Symmetry)
 local WFC = require(script.Parent.WFCNode)
 
+--[=[
+	@class TileModel
+]=]
 local TileModel = {}
 
 export type TileSpec = {
@@ -243,6 +246,15 @@ local function tileUpdateState(
 	end
 end
 
+--[=[
+	Creates a new TileModel WFC node, generating structures based on discrete tile adjacencies and neighbors.
+	@param config table -- The tile model configuration.
+	@param grid table -- The parent grid.
+	@param newgrid table -- The new child grid where generation happens.
+	@param _parentSymmetry table -- Ignored; tile model uses explicit internal symmetries.
+	@param children table -- The child nodes.
+	@return table -- The constructed TileModel node.
+]=]
 function TileModel.New(
 	config: TileModelConfig,
 	grid: Grid.Grid,

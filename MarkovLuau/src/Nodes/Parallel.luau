@@ -5,6 +5,9 @@ local Grid = require(script.Parent.Parent.Grid)
 local Node = require(script.Parent.Parent.Node)
 local RuleNode = require(script.Parent.RuleNode)
 
+--[=[
+	@class Parallel
+]=]
 local Parallel = {}
 
 export type ParallelData = {
@@ -12,6 +15,13 @@ export type ParallelData = {
 	NewState: buffer,
 }
 
+--[=[
+	Creates a new Parallel node, which applies rules to all matches using double-buffering.
+	@param config table -- The rule node configuration.
+	@param grid table -- The parent grid.
+	@param parentSymmetry table -- Symmetry mask inherited from the parent.
+	@return table -- The constructed Parallel node.
+]=]
 function Parallel.New(
 	config: RuleNode.RuleNodeConfig,
 	grid: Grid.Grid,

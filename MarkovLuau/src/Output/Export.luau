@@ -5,6 +5,11 @@ local VoxelField = require(script.Parent.Parent.Field.VoxelField)
 local Palette = require(script.Parent.Parent.Symbol.Palette)
 local Node = require(script.Parent.Parent.Node)
 
+--[=[
+	@class Export
+	
+	Provides utilities to extract voxel field data into renderable meshes.
+]=]
 local Export = {}
 
 export type MeshInput = {
