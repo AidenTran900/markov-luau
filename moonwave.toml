@@ -9,7 +9,7 @@ url = "https://docs.aidentran.dev"
 baseUrl = "/"
 organizationName = "AidenTran900"
 projectName = "markov-luau"
-staticDirectories = ["/home/atran/Documents/Projects/MarkovJuniorLuau/assets"]
+staticDirectories = ["static"]
 
 [docusaurus.themeConfig]
 colorMode = { defaultMode = "dark", respectPrefersColorScheme = true }
