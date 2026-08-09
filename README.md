@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="static/img/Logo.svg" alt="MarkovLuau" width="800 max-width="100%">
+  <img src="static/img/Logo.svg" alt="MarkovLuau" width="800" style="max-width: 100%;">
 </p>
 
 # MarkovLuau
